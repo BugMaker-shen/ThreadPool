@@ -20,3 +20,32 @@ void Semaphore::post() {
 	srcLimit_++;
 	cv_.notify_all();
 }
+
+/*
+class Semaphore {
+public:
+	Semaphore(int srcNum)
+		:srcNum_(srcNum)
+	{}
+
+	void wait() {
+		unique_lock<std::mutex> lock(mtx_);
+		if (--srcNum_ < 0) {
+			cv_.wait(lock, [&]()->bool {return srcNum_ >= 0; });
+		}
+	}
+
+	void post() {
+		unique_lock<std::mutex> lock(mtx_);
+		if (++srcNum_ <= 0) {
+			cv_.notify_all();
+		}
+	}
+
+private:
+	int srcNum_;
+	mutex mtx_;
+	condition_variable cv_;
+};
+
+*/
